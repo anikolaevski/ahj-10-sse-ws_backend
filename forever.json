@@ -1,0 +1,10 @@
+{
+    "uid": "netology",
+    "append": true,
+    "watch": true,
+    "script": "server.js",
+    "sourceDir": "f:/Netology_AJS/ahj_10_http1/src/js",
+    "logFile": "f:/Netology_AJS/ahj_10_http1/forever.log",
+    "outFile": "f:/Netology_AJS/ahj_10_http1/out.log",
+    "command": "node"
+}
