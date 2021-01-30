@@ -149,7 +149,7 @@ function parseMessage(msg, ws) {
         }
       }
     } else {
-      chat.push(message);
+      chat.push(message.short());
     }
   }
   // console.log(users, Object.keys(wsClients));

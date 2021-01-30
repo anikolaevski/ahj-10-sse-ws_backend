@@ -6,6 +6,15 @@ class Message {
     this.typ = obj.typ;
     this.text = obj.text;
   }
+
+  short() {
+    return {
+      id: this.id,
+      created: this.created,
+      user: this.user,
+      typ: this.typ,
+    };
+  }
 }
 
 module.exports = {
