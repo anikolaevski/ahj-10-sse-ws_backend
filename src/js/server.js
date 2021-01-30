@@ -149,7 +149,14 @@ function parseMessage(msg, ws) {
         }
       }
     } else {
-      chat.push(message.short());
+      const mess = new Message({
+        id: message.id,
+        created: message.created,
+        user: message.user,
+        typ: message.typ,
+        text: '',
+      });
+      chat.push(mess);
     }
   }
   // console.log(users, Object.keys(wsClients));
