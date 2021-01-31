@@ -143,9 +143,7 @@ function parseMessage(msg, ws) {
   if (!chat.find((o) => o.id === message.id)) {
     if (message.typ === 'newUser') {
       console.log('new.user', message.user);
-      if (ws) {
-        ws.ChatUser = message.user;
-      }
+
       for (const item of JSON.parse(message.text)) {
         // console.log(item);
         if (!users.find((o) => o.name === item.name)) {
@@ -158,6 +156,9 @@ function parseMessage(msg, ws) {
             text: '',
           }), errCallback);
           // userReject = false;
+          if (ws) {
+            ws.ChatUser = message.user;
+          }
         } else {
           ws.send(JSON.stringify({
             id: message.id,
