@@ -153,7 +153,7 @@ function parseMessage(msg, ws) {
             created: message.created,
             user: message.user,
             typ: 'userAccept',
-            text: '',
+            text: message.text,
           }), errCallback);
           // userReject = false;
           if (ws) {
