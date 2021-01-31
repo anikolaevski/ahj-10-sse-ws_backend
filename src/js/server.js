@@ -48,6 +48,7 @@ const port = process.env.PORT || 7070;
 const server = http.createServer(app.callback());
 const wsServer = new WS.Server({ server });
 const wsClients = {};
+let userReject = false;
 
 const errCallback = (err) => {
   if (err) {
@@ -64,7 +65,10 @@ wsServer.on('connection', (ws, req) => {
     if (msg.includes('{')) {
       // console.log('this', ws);
       parseMessage(msg, ws);
-      Broadcast(msg);
+      if (!userReject) {
+        Broadcast(msg);
+      }
+      userReject = false;
     } else {
       console.log(msg);
     }
@@ -73,7 +77,7 @@ wsServer.on('connection', (ws, req) => {
   ws.send('welcome', errCallback);
 });
 
-setInterval(() => { testReleased()}, 15000);
+setInterval(() => { testReleased(); }, 15000);
 server.listen(port);
 
 function testReleased() {
@@ -103,7 +107,7 @@ function testReleased() {
   // });
 
   // prepare Broadcast message of released users
-  if (remUsers.length > 0 ) {
+  if (remUsers.length > 0) {
     const message = new Message({
       user: 'system',
       typ: 'released',
@@ -146,6 +150,23 @@ function parseMessage(msg, ws) {
         // console.log(item);
         if (!users.find((o) => o.name === item.name)) {
           users.push(item);
+          ws.send({
+            id: message.id,
+            created: message.created,
+            user: message.user,
+            typ: 'userAccept',
+            text: '',
+          });
+          // userReject = false;
+        } else {
+          ws.send({
+            id: message.id,
+            created: message.created,
+            user: message.user,
+            typ: 'userReject',
+            text: '',
+          });
+          userReject = true;
         }
       }
     } else {
