@@ -150,22 +150,22 @@ function parseMessage(msg, ws) {
         // console.log(item);
         if (!users.find((o) => o.name === item.name)) {
           users.push(item);
-          ws.send({
+          ws.send(JSON.stringify({
             id: message.id,
             created: message.created,
             user: message.user,
             typ: 'userAccept',
             text: '',
-          });
+          }), errCallback);
           // userReject = false;
         } else {
-          ws.send({
+          ws.send(JSON.stringify({
             id: message.id,
             created: message.created,
             user: message.user,
             typ: 'userReject',
             text: '',
-          });
+          }), errCallback);
           userReject = true;
         }
       }
